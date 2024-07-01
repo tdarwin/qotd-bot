@@ -13,7 +13,7 @@ on:
 env:
   PROJECT_ID: dev-refbox
   REGION: us-central1
-  GAR_LOCATION: us-central1-docker.pkg.dev/dev-refbox-16bb9/qotd-bot/
+  GAR_LOCATION: "us-central1-docker.pkg.dev/dev-refbox-16bb9/qotd-bot/qotd-bot:latest"
 
 jobs:
   build-push-gcloud-artifact-registry:
