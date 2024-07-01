@@ -1,0 +1,42 @@
+name: Build and Push to GCloud Artifact Registry
+
+on:
+  push:
+    branches: ["main"]
+    tags: ["v*.*.*"]
+  pull_request:
+    branches: ["main"]
+
+env:
+  PROJECT_ID: dev-refbox
+  REGION: us-central1
+  GAR_LOCATION: us-central1-docker.pkg.dev/dev-refbox/qotd-bot/
+
+job:
+  build-push-gcloud-artifact-registry:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v3"
+
+      - id: "auth"
+        uses: "google-github-actions/auth@v1"
+        with:
+          credentials_json: "${{ secrets.GCLOUD_SERVICE_ACCOUNT_KEY }}"
+
+      - name: "Set up Cloud SDK"
+        uses: "google-github-actions/setup-gcloud@v1"
+
+      - name: "Use gcloud CLI"
+        run: "gcloud info"
+
+      - name: "Docker auth"
+        run: |-
+          gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev --quiet
+
+      - name: Build image
+        run: docker build . --file ./Dockerfile --tag ${{ env.GAR_LOCATION }}
+        working-directory: WORKING_DIRECTORY
+
+      - name: Push image
+        run: docker push ${{ env.GAR_LOCATION }}
