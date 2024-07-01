@@ -12,7 +12,7 @@ env:
   REGION: us-central1
   GAR_LOCATION: us-central1-docker.pkg.dev/dev-refbox/qotd-bot/
 
-job:
+jobs:
   build-push-gcloud-artifact-registry:
     runs-on: ubuntu-latest
     steps:

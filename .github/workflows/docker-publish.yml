@@ -14,7 +14,7 @@ env:
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
-  build:
+  build-and-push-to-github-registry:
     runs-on: ubuntu-latest
     permissions:
       contents: read
