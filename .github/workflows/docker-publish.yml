@@ -4,6 +4,9 @@ on:
   push:
     branches: ["main"]
     tags: ["v*.*.*"]
+    paths:
+      - Dockerfile
+      - .github/workflows/docker-publish.yml
   pull_request:
     branches: ["main"]
 
